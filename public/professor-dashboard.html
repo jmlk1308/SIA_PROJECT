@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professor Dashboard</title>
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Specific tweaks for Professor views */
+        .main-content { flex: 1; padding: 30px; overflow-y: auto; }
+        .view-section { display: none; animation: fadeIn 0.3s; }
+        .view-section.active { display: block; }
+        @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+        
+        .upload-area { 
+            border: 2px dashed #cbd5e0; padding: 30px; text-align: center; 
+            border-radius: 10px; cursor: pointer; background: #fff; transition: 0.3s; 
+        }
+        .upload-area:hover { border-color: #3182ce; background: #ebf8ff; }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <div class="logo">
+        <i class="fas fa-chalkboard-teacher"></i>
+        <h1>Professor <span>Portal</span></h1>
+    </div>
+    <div class="user-info">
+        <i class="fas fa-user-circle"></i>
+        <span id="prof-name">Loading...</span>
+    </div>
+    <div class="nav-menu">
+        <div class="nav-item active" onclick="switchView('dashboard', this)">
+            <i class="fas fa-chart-line"></i> <span>Overview</span>
+        </div>
+        <div class="nav-item" onclick="switchView('lessons', this)">
+            <i class="fas fa-book-open"></i> <span>Manage Lessons</span>
+        </div>
+        <div class="nav-item" onclick="switchView('quizzes', this)">
+            <i class="fas fa-edit"></i> <span>Manage Quizzes</span>
+        </div>
+        <div class="nav-item" onclick="switchView('profile', this)">
+            <i class="fas fa-user-cog"></i> <span>Profile Settings</span>
+        </div>
+        <div class="nav-item" onclick="logout()" style="margin-top:auto; border-top:1px solid rgba(255,255,255,0.1);">
+            <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
+        </div>
+    </div>
+</div>
+
+<div class="main-content">
+    
+    <div id="view-dashboard" class="view-section active">
+        <h2 style="margin-bottom:20px; color:#2d3748;">Dashboard Overview</h2>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon" style="background:#e6fffa; color:#38b2ac;"><i class="fas fa-users"></i></div>
+                <div class="stat-info">
+                    <h3 id="stat-students">0</h3>
+                    <p>Total Students</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background:#ebf8ff; color:#3182ce;"><i class="fas fa-book"></i></div>
+                <div class="stat-info">
+                    <h3 id="stat-lessons">0</h3>
+                    <p>Lessons Uploaded</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background:#faf5ff; color:#805ad5;"><i class="fas fa-question-circle"></i></div>
+                <div class="stat-info">
+                    <h3 id="stat-quizzes">0</h3>
+                    <p>Quizzes Created</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="view-lessons" class="view-section">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+            <h2>Manage Lessons</h2>
+            <button class="btn btn-primary" onclick="openUploadModal()">+ Upload Lesson</button>
+        </div>
+        
+        <div class="recent-orders"> <table id="lessons-table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Subject</th>
+                        <th>Module</th>
+                        <th>Type</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="view-quizzes" class="view-section">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+            <h2>Manage Quizzes</h2>
+            <button class="btn btn-primary" onclick="openQuizModal()">+ Create Quiz</button>
+        </div>
+
+        <div class="recent-orders">
+            <table id="quizzes-table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Subject</th>
+                        <th>Grading</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="view-profile" class="view-section">
+        <h2>Profile Settings</h2>
+        <div class="profile-card" style="max-width:600px; margin-top:20px;">
+            <form id="profile-form">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="prof-fullname" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="prof-email" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>New Password (Optional)</label>
+                    <input type="password" id="prof-password" class="form-control" placeholder="Leave blank to keep current">
+                </div>
+                <button type="submit" class="btn btn-primary">Update Profile</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="uploadModal" class="modal">
+    <div class="modal-content">
+        <h3>Upload New Lesson</h3>
+        <form id="uploadForm">
+            <div class="form-group">
+                <label>Subject</label>
+                <select id="uploadSubject" class="form-control" required></select>
+            </div>
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" id="uploadTitle" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label>Module Name</label>
+                <input type="text" id="uploadModule" class="form-control" required placeholder="e.g., Module 1">
+            </div>
+            <div class="form-group">
+                <label>File (PDF/Video)</label>
+                <input type="file" id="uploadFile" class="form-control" required>
+            </div>
+            <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px;">
+                <button type="button" class="btn btn-danger" onclick="document.getElementById('uploadModal').classList.remove('active')">Cancel</button>
+                <button type="submit" class="btn btn-primary">Upload</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="quizModal" class="modal">
+    <div class="modal-content">
+        <h3>Create AI-Graded Quiz</h3>
+        <form id="quizForm">
+            <div class="form-group">
+                <label>Subject</label>
+                <select id="quizSubject" class="form-control" required></select>
+            </div>
+            <div class="form-group">
+                <label>Quiz Title</label>
+                <input type="text" id="quizTitle" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label>Essay Question (AI Prompt)</label>
+                <textarea id="quizPrompt" class="form-control" rows="4" required placeholder="Enter the question for AI analysis..."></textarea>
+            </div>
+            <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px;">
+                <button type="button" class="btn btn-danger" onclick="document.getElementById('quizModal').classList.remove('active')">Cancel</button>
+                <button type="submit" class="btn btn-primary">Publish</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="js/professor.js"></script>
+</body>
+</html>

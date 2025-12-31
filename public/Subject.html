@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subject Details</title>
+    <link rel="stylesheet" href="css/Subject.css">
+</head>
+<body>
+
+    <nav>
+        <div class="brand-text">CS Interactive Learning Hub</div>
+        <button onclick="window.location.href='index.html'" class="nav-btn">
+            <i class="fas fa-home"></i> Dashboard
+        </button>
+    </nav>
+
+    <div class="sub-header">
+        <div class="max-w-7xl header-content">
+            <button onclick="history.back()" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back
+            </button>
+            <h1 id="subject-title" class="page-title">Loading Subject...</h1>
+        </div>
+    </div>
+
+    <main class="max-w-7xl px-4" style="padding: 0 2rem; margin: 0 auto; width: 100%;">
+
+        <div class="tabs-container">
+            <button class="tab-btn active" onclick="switchTab('video')" style="border-bottom-color: #ef4444;">
+                <i class="fas fa-video" style="color:#ef4444;"></i> Video
+            </button>
+            <button class="tab-btn" onclick="switchTab('pdf')" style="border-bottom-color: #f59e0b;">
+                <i class="fas fa-file-pdf" style="color:#f59e0b;"></i> PDF
+            </button>
+            <button class="tab-btn" onclick="switchTab('ppt')" style="border-bottom-color: #22c55e;">
+                <i class="fas fa-file-powerpoint" style="color:#22c55e;"></i> PPT
+            </button>
+            <button class="tab-btn" onclick="switchTab('quiz')" style="border-bottom-color: #3b82f6;">
+                <i class="fas fa-clipboard-question" style="color:#3b82f6;"></i> Quiz
+            </button>
+        </div>
+
+        <div class="viewer-box">
+            <div id="content-display">
+                <div class="placeholder">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 2rem; margin-bottom: 10px; color: #cbd5e0;"></i><br>
+                    Loading content...
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="js/Subject.js"></script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome - CS Learning Hub</title>
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div id="bg-container"></div>
+
+    <nav>
+        <div class="brand">
+            <div class="logo-circle"><i class="fas fa-desktop text-white"></i></div>
+            <span class="logo-text">CS Learning Hub</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#" class="active">HOME</a></li>
+            <li><a href="#">ABOUT US</a></li>
+            <li><a href="index.html" style="color:#4ade80;">LOGIN</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <div class="hero-left">
+            <h1 id="hero-title" class="hero-title">LOADING...</h1>
+            <p id="hero-desc" class="hero-desc">Explore our interactive courses.</p>
+            <a href="index.html" class="btn-primary">LOGIN TO START</a>
+        </div>
+
+        <div class="carousel-section">
+            <div id="card-track" class="card-track"></div>
+            
+            <div class="controls">
+                <button id="prevBtn" class="control-btn"><i class="fas fa-chevron-left"></i></button>
+                <button id="nextBtn" class="control-btn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/home.js"></script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+/* --- 1. GLOBAL & RESET --- */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+
+body { background-color: #F8F9FD; color: #1f2937; overflow-x: hidden; }
+
+/* --- 2. NAVBAR (Matches Dashboard) --- */
+#navbar {
+    background: #1e293b; /* Dark Navy */
+    color: white;
+    padding: 1rem 2rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand-text { font-size: 1.25rem; font-weight: 700; color: white; letter-spacing: 0.5px; }
+
+.nav-icon-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: 0.3s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nav-icon-btn:hover { background: #3b82f6; border-color: #3b82f6; }
+
+/* --- 3. PAGE HEADER --- */
+.sub-header-container {
+    background: white;
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid #e5e7eb;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.back-btn {
+    background: none; border: none; font-size: 1.1rem; cursor: pointer; color: #6b7280;
+    transition: 0.2s; display: flex; align-items: center; gap: 5px;
+}
+.back-btn:hover { color: #111827; transform: translateX(-3px); }
+
+.page-title { font-size: 1.5rem; font-weight: 700; color: #111827; }
+
+/* --- 4. TIMELINE CONTAINER --- */
+.roadmap-container {
+    position: relative;
+    max-width: 1000px; /* Constrain width so it doesn't overflow */
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+/* The Vertical Line */
+.timeline-line {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    background-color: #e5e7eb;
+    top: 0;
+    bottom: 0;
+    z-index: 0;
+    border-radius: 2px;
+}
+
+/* --- 5. TIMELINE ITEMS --- */
+.module-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3rem;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+}
+
+/* Row Direction for Zig-Zag */
+.module-row.left { flex-direction: row; }
+.module-row.right { flex-direction: row-reverse; }
+
+/* The Card Itself */
+.module-card {
+    background: white;
+    width: 45%; /* Keeps cards from hitting the edges */
+    padding: 1.5rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-top: 5px solid #3b82f6; /* Default Blue */
+    position: relative;
+}
+
+.module-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.module-title { font-weight: 700; font-size: 1.1rem; color: #1f2937; margin-bottom: 0.5rem; display: flex; align-items: center; }
+.module-desc { font-size: 0.9rem; color: #6b7280; margin-bottom: 1rem; }
+
+/* Status Badges */
+.status-badge {
+    display: inline-block; font-size: 0.75rem; padding: 0.25rem 0.75rem;
+    border-radius: 99px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase;
+}
+.status-active { background: #dbeafe; color: #1e40af; } /* Blue for Lessons */
+.status-quiz { background: #fef3c7; color: #d97706; }   /* Orange for Quizzes */
+
+/* --- 6. CENTER MARKER (The Circle) --- */
+.module-marker {
+    width: 3rem; height: 3rem;
+    background-color: white;
+    border: 4px solid #3b82f6;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: #3b82f6; font-weight: 800; font-size: 1.1rem;
+    position: absolute;
+    left: 50%; transform: translateX(-50%);
+    z-index: 2;
+    box-shadow: 0 0 0 4px #f3f4f6; /* White ring effect */
+}
+
+/* RESPONSIVE: On mobile, stack everything */
+@media (max-width: 768px) {
+    .timeline-line { left: 20px; }
+    .module-marker { left: 20px; }
+    
+    .module-row { flex-direction: column; align-items: flex-start; margin-left: 50px; width: auto; }
+    .module-row.right { flex-direction: column; }
+    
+    .module-card { width: 100%; margin-bottom: 1rem; }
+    .spacer { display: none; } /* Hide empty spacer div */
+}
